@@ -2,7 +2,9 @@ env = (require 'jsdom').env
 http = require 'http'
 querystring = require 'querystring'
 iconv = require 'iconv-lite'
-html = ''
+BufferHelper = require 'bufferhelper'
+jquery = require 'jquery'
+fs = require 'fs'
 options =
 	hostname: "e.tju.edu.cn"
 	port: 80
@@ -16,12 +18,16 @@ post_data = querystring.stringify
 	building_no: '0022'
 
 req = http.request options,(res)->
-	res.setEncoding 'utf8'
+	bufferHelper = new BufferHelper()
 	res.on 'data',(chunk)->
-		html += chunk
+		bufferHelper.concat chunk
 	res.on 'end',->
+		html = iconv.decode bufferHelper.toBuffer(),'GBK'
 		env html,(err,window)->
-			$ = (require 'jquery')(window)
+			$ = jquery(window)
+			fs.writeFile 'message.html',html,(err)->
+				throw err if err
+				console.log 'saved'
 			# table = $('form table')[1]
 			# console.log table.html()
 			# $('strong font').filter ->
