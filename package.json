@@ -20,7 +20,8 @@
     "jquery": ">=2.1",
 	"jsdom" : "*",
 	"iconv-lite": "*",
-	"bufferhelper": "*"
+	"bufferhelper": "*",
+  "async": "*"
   },
   "bugs": {
     "url": "https://github.com/lyd600lty/twt_studyroom/issues"
