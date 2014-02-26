@@ -5,17 +5,20 @@ iconv = require 'iconv-lite'
 BufferHelper = require 'bufferhelper'
 jquery = require 'jquery'
 fs = require 'fs'
-options =
-	hostname: "e.tju.edu.cn"
-	port: 80
-	path: "/Education/schedule.do?schekind=6"
-	method: 'POST'
-
 
 post_data = querystring.stringify
 	todo: 'displayWeekBuilding'
 	week: 1
 	building_no: '0022'
+
+options =
+	hostname: "e.tju.edu.cn"
+	port: 80
+	path: "/Education/schedule.do?schekind=6"
+	method: 'POST'
+	headers:
+		'Content-Type': 'application/x-www-form-urlencoded'
+		'Content-Length': post_data.length
 
 req = http.request options,(res)->
 	bufferHelper = new BufferHelper()
